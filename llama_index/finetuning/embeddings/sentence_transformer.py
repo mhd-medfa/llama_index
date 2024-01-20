@@ -45,7 +45,7 @@ class SentenceTransformersFinetuneEngine(BaseEmbeddingFinetuneEngine):
         # Wrap the model with DataParallel to utilize multiple GPUs
         num_gpus = torch.cuda.device_count()
         devices = [f'cuda:{i}' for i in range(num_gpus)]
-        self.model = torch.nn.DataParallel(self.model, device_ids=[device.idx for device in devices])
+        self.model = torch.nn.DataParallel(self.model, device_ids=[idx for idx in range(num_gpus)])
 
         self.examples = [InputExample(texts=[query, dataset.corpus[dataset.relevant_docs[query_id][0]]])
                          for query_id, query in dataset.queries.items()]
