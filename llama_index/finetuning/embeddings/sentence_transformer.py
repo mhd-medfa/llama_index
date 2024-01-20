@@ -41,10 +41,10 @@ class SentenceTransformersFinetuneEngine(BaseEmbeddingFinetuneEngine):
         self.model_id = model_id
         self.model_output_path = model_output_path
         self.model = SentenceTransformer(model_id)
-        self.model = model.to(devices[0])
+        self.model = self.model.to(devices[0])
 
         # Wrap the model with DataParallel to utilize multiple GPUs
-        model = torch.nn.DataParallel(model, device_ids=[device. Index for device in 
+        self.model = torch.nn.DataParallel(model, device_ids=[device. Index for device in 
         devices])
 
         # TODO: support more than 1 doc per query
