@@ -91,7 +91,6 @@ class SentenceTransformersFinetuneEngine(BaseEmbeddingFinetuneEngine):
             data_collator=train_kwargs.get('data_collator', None),
             compute_metrics=train_kwargs.get('compute_metrics', None),
             callbacks=train_kwargs.get('callbacks', None),
-            tb_writer=train_kwargs.get('tb_writer', None),
             optimizers=train_kwargs.get('optimizers', None),
             scheduler=train_kwargs.get('scheduler', get_linear_schedule_with_warmup),
         )
