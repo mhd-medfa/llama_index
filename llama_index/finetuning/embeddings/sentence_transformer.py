@@ -44,7 +44,7 @@ class SentenceTransformersFinetuneEngine(BaseEmbeddingFinetuneEngine):
         self.model = self.model.to('cuda:0')
 
         # Wrap the model with DataParallel to utilize multiple GPUs
-        self.model = torch.nn.DataParallel(self.model, device_ids=[device. Index for device in 
+        self.model = torch.nn.DataParallel(self.model, device_ids=[device.idx for device in 
         devices])
 
         # TODO: support more than 1 doc per query
