@@ -29,6 +29,7 @@ class SentenceTransformersFinetuneEngine(BaseEmbeddingFinetuneEngine):
         from sentence_transformers import InputExample, SentenceTransformer, losses
         from torch.utils.data import DataLoader
         import torch.nn as nn
+        import torch
         # Check the number of available GPUs
         num_gpus = torch.cuda.device_count()
         
