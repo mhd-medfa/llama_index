@@ -34,7 +34,7 @@ class SentenceTransformersFinetuneEngine(BaseEmbeddingFinetuneEngine):
         num_gpus = torch.cuda.device_count()
         
         # Specify the devices to be used (cuda:0, cuda:1, ...)
-        devices = [cuda.device(f'cuda:{i}') for i in range(num_gpus)]
+        devices = [torch.cuda.device(f'cuda:{i}') for i in range(num_gpus)]
 
         self.dataset = dataset
 
