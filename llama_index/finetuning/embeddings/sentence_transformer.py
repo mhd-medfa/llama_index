@@ -28,12 +28,23 @@ class SentenceTransformersFinetuneEngine(BaseEmbeddingFinetuneEngine):
         """Init params."""
         from sentence_transformers import InputExample, SentenceTransformer, losses
         from torch.utils.data import DataLoader
+        import torch.nn as nn
+        # Check the number of available GPUs
+        num_gpus = torch.cuda.device_count()
+        
+        # Specify the devices to be used (cuda:0, cuda:1, ...)
+        devices = [cuda.device(f'cuda:{i}') for i in range(num_gpus)]
 
         self.dataset = dataset
 
         self.model_id = model_id
         self.model_output_path = model_output_path
         self.model = SentenceTransformer(model_id)
+        self.model = model.to(devices[0])
+
+        # Wrap the model with DataParallel to utilize multiple GPUs
+        model = torch.nn.DataParallel(model, device_ids=[device. Index for device in 
+        devices])
 
         # TODO: support more than 1 doc per query
         examples: Any = []
@@ -66,6 +77,7 @@ class SentenceTransformersFinetuneEngine(BaseEmbeddingFinetuneEngine):
 
     def finetune(self, **train_kwargs: Any) -> None:
         """Finetune model."""
+        
         self.model.fit(
             train_objectives=[(self.loader, self.loss)],
             epochs=self.epochs,
